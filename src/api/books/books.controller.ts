@@ -14,7 +14,11 @@ export type Book = {
 };
 
 export const fetchBooks = () => {
-  let queryParams: any = {};
+  let queryParams: any = {
+    where: {
+      deletedOn: null,
+    },
+  };
 
   return db.book.findMany({
     ...queryParams,
@@ -32,9 +36,10 @@ export const fetchBooks = () => {
 };
 
 export const fetchBookById = (bookId: number) => {
-  return db.book.findUniqueOrThrow({
+  return db.book.findFirst({
     where: {
       id: bookId,
+      deletedOn: null,
     },
     include: {
       author: {
@@ -97,6 +102,7 @@ export const updateBookById = async (
     where: {
       id: bookId,
       authorId: authorId,
+      deletedOn: null,
     },
     data: {
       title,
@@ -123,6 +129,7 @@ export const publishBookById = async (bookId: number, authorId: number) => {
     where: {
       id: bookId,
       authorId: authorId,
+      deletedOn: null,
     },
     data: {
       publishedOn: new Date(),
@@ -145,6 +152,7 @@ export const unpublishBookById = async (bookId: number, authorId: number) => {
     where: {
       id: bookId,
       authorId: authorId,
+      deletedOn: null,
     },
     data: {
       publishedOn: null,
@@ -167,9 +175,10 @@ export const deleteBookById = async (bookId: number, authorId: number) => {
     where: {
       id: bookId,
       authorId: authorId,
+      deletedOn: null,
     },
     data: {
-      deletedOn: null,
+      deletedOn: new Date(),
     },
   });
 

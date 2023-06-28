@@ -2,6 +2,8 @@ import express from "express";
 import {
   Book,
   createBook,
+  deleteBookById,
+  fetchBookById,
   fetchBooks,
   publishBookById,
   unpublishBookById,
@@ -23,6 +25,16 @@ interface AuthenticatedUser extends Express.User {
 router.get("/", async (req, res, next) => {
   try {
     return res.status(200).json(await fetchBooks());
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/:bookId", async (req, res, next) => {
+  try {
+    return res
+      .status(200)
+      .json(await fetchBookById(parseInt(req.params.bookId)));
   } catch (error) {
     next(error);
   }
@@ -57,6 +69,7 @@ router.post(
     }
   }
 );
+
 router.patch(
   "/:bookId",
   validateRequest(createBookRequest),
@@ -85,6 +98,7 @@ router.patch(
     }
   }
 );
+
 router.patch(
   "/:bookId/publish",
   passport.authenticate("jwt", { session: false }),
@@ -100,6 +114,7 @@ router.patch(
     }
   }
 );
+
 router.patch(
   "/:bookId/unpublish",
   passport.authenticate("jwt", { session: false }),
@@ -110,6 +125,22 @@ router.patch(
       return res
         .status(200)
         .json(await unpublishBookById(parseInt(req.params.bookId), user.id));
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.delete(
+  "/:bookId",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    const user = req.user as AuthenticatedUser;
+
+    try {
+      return res
+        .status(204)
+        .json(await deleteBookById(parseInt(req.params.bookId), user.id));
     } catch (error) {
       next(error);
     }
