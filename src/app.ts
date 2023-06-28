@@ -4,9 +4,9 @@ import helmet from "helmet";
 import cors from "cors";
 
 import authRouter from "./api/authors/authors.routes";
-import * as middlewares from "./middlewares";
+import middlewares from "./middlewares";
 
-require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` });
+require("dotenv").config();
 
 const app = express();
 
