@@ -30,5 +30,7 @@ export const createAuthor = async (
 };
 
 export const getAuthors = async (): Promise<Omit<User, "password">[]> => {
-  return db.user.findMany();
+  return db.user.findMany({
+    select: { id: true, name: true, email: true, pseudonym: true },
+  });
 };
