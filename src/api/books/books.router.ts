@@ -32,6 +32,8 @@ router.post(
   validateRequest(createBookRequest),
   passport.authenticate("jwt", { session: false }),
   async (req, res, next) => {
+    const user = req.user as AuthenticatedUser;
+
     const {
       title,
       description,
@@ -39,26 +41,49 @@ router.post(
       price,
     }: Pick<Book, "title" | "description" | "coverImage" | "price"> = req.body;
 
-    const user = req.user as AuthenticatedUser;
-
-    if (user) {
-      try {
-        return res.status(201).json(
-          await createBook({
-            title,
-            description,
-            authorId: user.id,
-            coverImage,
-            price,
-          })
-        );
-      } catch (error) {
-        next(error);
-      }
+    try {
+      return res.status(201).json(
+        await createBook({
+          title,
+          description,
+          authorId: user.id,
+          coverImage,
+          price,
+        })
+      );
+    } catch (error) {
+      next(error);
     }
   }
 );
-router.patch("/:bookId", updateBookById);
+router.patch(
+  "/:bookId",
+  validateRequest(createBookRequest),
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    const user = req.user as AuthenticatedUser;
+    const {
+      title,
+      description,
+      coverImage,
+      price,
+    }: Pick<Book, "title" | "description" | "coverImage" | "price"> = req.body;
+
+    try {
+      return res.status(200).json(
+        await updateBookById(parseInt(req.params.bookId), {
+          title,
+          description,
+          authorId: user.id,
+          coverImage,
+          price,
+        })
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 router.patch("/:bookId/publish", publishBookById);
 
 export default router;
