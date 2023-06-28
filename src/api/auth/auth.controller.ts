@@ -12,10 +12,7 @@ export interface UserLoginResponse {
 export const attemptLogin = async ({
   email,
   password,
-}: {
-  email: string;
-  password: string;
-}): Promise<UserLoginResponse> => {
+}: Pick<User, "password" | "email">): Promise<UserLoginResponse> => {
   const user = await db.user.findFirst({
     where: { email },
   });
