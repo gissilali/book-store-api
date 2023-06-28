@@ -4,6 +4,7 @@ import {
   createBook,
   fetchBooks,
   publishBookById,
+  unpublishBookById,
   updateBookById,
 } from "./books.controller";
 import { validateRequest } from "../../middlewares/requestValidation";
@@ -84,6 +85,35 @@ router.patch(
     }
   }
 );
-router.patch("/:bookId/publish", publishBookById);
+router.patch(
+  "/:bookId/publish",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    const user = req.user as AuthenticatedUser;
+
+    try {
+      return res
+        .status(200)
+        .json(await publishBookById(parseInt(req.params.bookId), user.id));
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+router.patch(
+  "/:bookId/unpublish",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    const user = req.user as AuthenticatedUser;
+
+    try {
+      return res
+        .status(200)
+        .json(await unpublishBookById(parseInt(req.params.bookId), user.id));
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 export default router;

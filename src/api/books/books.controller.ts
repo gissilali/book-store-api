@@ -18,6 +18,7 @@ export const fetchBooks = () => {
 
   return db.book.findMany({
     ...queryParams,
+
     include: {
       author: {
         select: {
@@ -117,6 +118,68 @@ export const updateBookById = async (
   throw new ResourceNotFoundError("Requested book not found");
 };
 
-export const publishBookById = (bookId: number) => {};
+export const publishBookById = async (bookId: number, authorId: number) => {
+  const updatedBooks = await db.book.updateMany({
+    where: {
+      id: bookId,
+      authorId: authorId,
+    },
+    data: {
+      publishedOn: new Date(),
+    },
+  });
 
-export const deleteBookById = (bookId: number) => {};
+  if (updatedBooks.count > 0) {
+    return db.book.findFirst({
+      where: {
+        id: bookId,
+      },
+    });
+  }
+
+  throw new ResourceNotFoundError("Requested book not found");
+};
+
+export const unpublishBookById = async (bookId: number, authorId: number) => {
+  const updatedBooks = await db.book.updateMany({
+    where: {
+      id: bookId,
+      authorId: authorId,
+    },
+    data: {
+      publishedOn: null,
+    },
+  });
+
+  if (updatedBooks.count > 0) {
+    return db.book.findFirst({
+      where: {
+        id: bookId,
+      },
+    });
+  }
+
+  throw new ResourceNotFoundError("Requested book not found");
+};
+
+export const deleteBookById = async (bookId: number, authorId: number) => {
+  const updatedBooks = await db.book.updateMany({
+    where: {
+      id: bookId,
+      authorId: authorId,
+    },
+    data: {
+      deletedOn: null,
+    },
+  });
+
+  if (updatedBooks.count > 0) {
+    return db.book.findFirst({
+      where: {
+        id: bookId,
+      },
+    });
+  }
+
+  throw new ResourceNotFoundError("Requested book not found");
+};
