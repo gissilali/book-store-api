@@ -24,6 +24,8 @@ model Book {
   title       String
   description String?
   publishedOn DateTime?
+  coverImage  String?
+  price       Decimal
   author      User      @relation(fields: [authorId], references: [id])
   authorId    Int
 }
