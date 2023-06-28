@@ -1,14 +1,16 @@
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { ValidationErrorObject } from "../middlewares/requestValidation";
+import { CustomError } from "./CustomError";
 
-class ValidationError {
+class ValidationError extends CustomError {
   error: PrismaClientKnownRequestError;
 
   errorCode: number = 422;
 
   errorType: string = "REQUEST_VALIDATION_ERROR";
 
-  constructor(error: PrismaClientKnownRequestError) {
+  constructor(error: PrismaClientKnownRequestError, message: string = "") {
+    super(message);
     this.error = error;
     Object.setPrototypeOf(this, ValidationError.prototype);
   }

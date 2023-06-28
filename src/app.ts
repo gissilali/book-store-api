@@ -3,7 +3,8 @@ import morgan from "morgan";
 import helmet from "helmet";
 import cors from "cors";
 
-import authRouter from "./api/authors/authors.routes";
+import authorsRouter from "./api/authors/authors.routes";
+import authRouter from "./api/auth/auth.routes";
 import middlewares from "./middlewares";
 
 require("dotenv").config();
@@ -15,7 +16,8 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-app.use("/authors", authRouter);
+app.use("/authors", authorsRouter);
+app.use("/auth", authRouter);
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
