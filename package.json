@@ -9,7 +9,8 @@
     "build": "tsc",
     "lint": "eslint --fix src test",
     "test": "jest --verbose",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "generate-jwt-key": "node generateJWTSecret.js"
   },
   "keywords": [],
   "author": "CJ R. <cj@null.computer> (https://w3cj.now.sh)",
