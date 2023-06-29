@@ -1,34 +1,31 @@
 import request from "supertest";
 import app from "../../app";
-import * as sinon from "sinon";
-import { db as prismaClient } from "../../database";
+import { refreshDB } from "../../../test/refresh.db";
+
+beforeEach(() => {
+  refreshDB();
+});
 
 describe("Authors", () => {
-  it("registers author", (done) => {
-    prismaClient.user.create = sinon.stub().resolves({
-      id: 1,
+  it("can register author", async () => {
+    const userInput = {
       name: "Gibson Silali",
-      email: "harter@mail.com",
+      email: "floyd@mayweather.com",
+      password: "password",
       pseudonym: "silali_",
-    });
-
-    request(app)
+    };
+    const { body, statusCode } = await request(app)
       .post("/authors")
-      .send({
-        id: 1,
-        name: "Gibson Silali",
-        email: "harter@mail.com",
-        password: "password",
-        pseudonym: "silali_",
-      })
+      .send(userInput)
       .set("Accept", "application/json")
-      .expect("Content-Type", /json/)
-      .expect(201, {
-        id: 1,
-        name: "Gibson Silali",
-        email: "harter@mail.com",
-        pseudonym: "silali_",
-      })
-      .end(done);
+      .expect("Content-Type", /json/);
+
+    expect(statusCode).toBe(201);
+    expect(body).toHaveProperty("email");
+    expect(body.email).toBe(userInput.email);
   });
+});
+
+afterEach(() => {
+  refreshDB();
 });

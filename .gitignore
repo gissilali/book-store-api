@@ -74,3 +74,6 @@ typings/
 
 dist
 .idea/
+dev.db-journal
+test.db
+prisma/dev.db

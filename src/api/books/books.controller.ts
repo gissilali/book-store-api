@@ -82,11 +82,13 @@ export const createBook = ({
       coverImage,
     },
     select: {
+      id: true,
       title: true,
       description: true,
       authorId: true,
       price: true,
       coverImage: true,
+      publishedOn: true,
       author: {
         select: {
           name: true,
@@ -110,7 +112,7 @@ export const updateBookById = async (
 ) => {
   const updatedBooks = await db.book.updateMany({
     where: {
-      id: bookId,
+      id: Number(bookId),
       authorId: authorId,
       deletedOn: null,
     },
