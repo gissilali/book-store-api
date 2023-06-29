@@ -12,19 +12,14 @@ import {
 import { validateRequest } from "../../middlewares/requestValidation";
 import { createBookRequest } from "./books.validators";
 import passport from "passport";
+import { AuthenticatedUser } from "../auth/auth.controller";
+import { stopDarthVader } from "../../middlewares/obiWanKenobi";
 
 const router = express.Router();
 
-interface AuthenticatedUser extends Express.User {
-  id: number;
-  name: string;
-  email: string;
-  pseudonym: string | null;
-}
-
 router.get("/", async (req, res, next) => {
   try {
-    return res.status(200).json(await fetchBooks());
+    return res.status(200).json(await fetchBooks(req.query));
   } catch (error) {
     next(error);
   }
@@ -44,6 +39,7 @@ router.post(
   "/",
   validateRequest(createBookRequest),
   passport.authenticate("jwt", { session: false }),
+  stopDarthVader(),
   async (req, res, next) => {
     const user = req.user as AuthenticatedUser;
 
@@ -74,6 +70,7 @@ router.patch(
   "/:bookId",
   validateRequest(createBookRequest),
   passport.authenticate("jwt", { session: false }),
+  stopDarthVader(),
   async (req, res, next) => {
     const user = req.user as AuthenticatedUser;
     const {
@@ -102,6 +99,7 @@ router.patch(
 router.patch(
   "/:bookId/publish",
   passport.authenticate("jwt", { session: false }),
+  stopDarthVader(),
   async (req, res, next) => {
     const user = req.user as AuthenticatedUser;
 
@@ -134,6 +132,7 @@ router.patch(
 router.delete(
   "/:bookId",
   passport.authenticate("jwt", { session: false }),
+  stopDarthVader(),
   async (req, res, next) => {
     const user = req.user as AuthenticatedUser;
 

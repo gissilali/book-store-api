@@ -1,6 +1,7 @@
 import { db } from "../../database";
 import { ResourceNotFoundError } from "../../exceptions/ResourceNotFoundError";
 import { User } from "../authors/authors.controller";
+import { Request } from "express";
 
 export type Book = {
   id: number;
@@ -13,16 +14,25 @@ export type Book = {
   author: Pick<User, "id" | "name" | "pseudonym">;
 };
 
-export const fetchBooks = () => {
-  let queryParams: any = {
-    where: {
-      deletedOn: null,
-    },
-  };
+interface ReqQuery {
+  title?: string;
+  authorId?: number;
+  minPrice?: string;
+  maxPrice?: string;
+}
 
+export const fetchBooks = (query: ReqQuery) => {
   return db.book.findMany({
-    ...queryParams,
-
+    where: {
+      authorId: (Number(query.authorId) as number) || undefined,
+      title: {
+        contains: (query.title as string) || undefined,
+      },
+      price: {
+        gte: query.minPrice ? Number(query.minPrice) : undefined,
+        lte: query.maxPrice ? Number(query.maxPrice) : undefined,
+      },
+    },
     include: {
       author: {
         select: {

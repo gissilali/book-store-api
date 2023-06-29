@@ -13,6 +13,7 @@ export default function errorHandler(
   res: Response<ErrorResponse>,
   next: NextFunction
 ) {
+  console.log({ err });
   if (err instanceof PrismaClientKnownRequestError) {
     const validationError = new ValidationError(err);
     res.status(validationError.errorCode).json({
