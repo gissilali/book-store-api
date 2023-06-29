@@ -23,6 +23,7 @@ node generate-jwt-token
 Next, paste ``DATABASE_URL="file:./dev.db"`` to the .env file this needed by prisma to be able to connect to your database
 
 To create the database run, this will create all tables needed to run the application
+
 ```
 npx prisma migrate dev --name init
 ```
@@ -32,15 +33,19 @@ Finally, run ``npm run dev`` to start the application in development mode
 To test run ``npm run test``
 
 ### Assumption
+
 - The test database should be different from the production database
 
 # API Documentation
 
 ## End-point: Register User
+
 ### Method: POST
+>
 >```
 >{{base_url}}/authors
 >```
+>
 ### Body (**raw**)
 
 ```json
@@ -53,6 +58,7 @@ To test run ``npm run test``
 ```
 
 ### Response: 201
+
 ```json
 {
     "id": 1,
@@ -62,14 +68,16 @@ To test run ``npm run test``
 }
 ```
 
-
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 
 ## End-point: Login
+
 ### Method: POST
+>
 >```
 >{{base_url}}/auth/login
 >```
+>
 ### Body (**raw**)
 
 ```json
@@ -80,6 +88,7 @@ To test run ``npm run test``
 ```
 
 ### Response: 200
+
 ```json
 {
     "user": {
@@ -92,14 +101,16 @@ To test run ``npm run test``
 }
 ```
 
-
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 
 ## End-point: Create Book
+
 ### Method: POST
+>
 >```
 >{{base_url}}/books
 >```
+>
 ### Body (**raw**)
 
 ```json
@@ -117,8 +128,8 @@ To test run ``npm run test``
 |---|---|---|
 |token|eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg4MDU0NzYzLCJleHAiOjE2ODgxNDExNjN9.BiRg5t9rF-WlAv8QzhYZhomMGSnbws9_Qxe0KaWL7Ds|string|
 
-
 ### Response: 201
+
 ```json
 {
     "id": 1,
@@ -136,14 +147,16 @@ To test run ``npm run test``
 }
 ```
 
-
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 
 ## End-point: Update Book
+
 ### Method: PATCH
+>
 >```
 >{{base_url}}/books/1/publish
 >```
+>
 ### Body (**raw**)
 
 ```json
@@ -161,8 +174,8 @@ To test run ``npm run test``
 |---|---|---|
 |token|eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg3OTkyMTM0LCJleHAiOjE2ODgwNzg1MzR9.kZhs-iDLwiTlbSQebH5gLP3hT9y-btF4iaMuQ6UDI8I|string|
 
-
 ### Response: 200
+
 ```json
 {
     "id": 1,
@@ -176,14 +189,16 @@ To test run ``npm run test``
 }
 ```
 
-
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 
 ## End-point: Get Books
+
 ### Method: GET
+>
 >```
->{{base_url}}/books?title=Fledg&authorId=1&minPrice=20
+>{{base_url}}/books?title=Darth&authorId=1&minPrice=20&maxPrice=100
 >```
+>
 ### Body (**raw**)
 
 ```json
@@ -194,10 +209,10 @@ To test run ``npm run test``
 
 |Param|value|
 |---|---|
-|title|Fledg|
+|title|Darth|
 |authorId|1|
 |minPrice|20|
-
+|maxPrice|100|
 
 ### 🔑 Authentication bearer
 
@@ -205,8 +220,8 @@ To test run ``npm run test``
 |---|---|---|
 |token|eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg4MDcxODMzLCJleHAiOjE2ODgxNTgyMzN9.JUeWC5XjiC-y1dgmjBj0an4Ba8FJnizWaeFpwvp6NMs|string|
 
-
 ### Response: 200
+
 ```json
 [
     {
@@ -227,28 +242,34 @@ To test run ``npm run test``
 ]
 ```
 
-
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 
 ## End-point: Delete Book
+
 ### Method: DELETE
+>
 >```
 >{{base_url}}/books/1
 >```
+>
 ### Response: 204
+
 ```json
 null
 ```
 
-
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 
 ## End-point: Get Book
+
 ### Method: GET
+>
 >```
 >{{base_url}}/books/1
 >```
+>
 ### Response: 200
+
 ```json
 {
     "id": 2,
@@ -267,38 +288,38 @@ null
 }
 ```
 
-
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 
 ## End-point: Publish Book By ID
+
 ### Method: PATCH
+>
 >```
 >{{base_url}}/books/2/publish
 >```
+>
 ### 🔑 Authentication bearer
 
 |Param|value|Type|
 |---|---|---|
 |token|eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg4MDU0NzYzLCJleHAiOjE2ODgxNDExNjN9.BiRg5t9rF-WlAv8QzhYZhomMGSnbws9_Qxe0KaWL7Ds|string|
-
-
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 
 ## End-point: Unpublish Book  By ID
+
 ### Method: PATCH
+>
 >```
 >{{base_url}}/books/2/unpublish
 >```
+>
 ### 🔑 Authentication bearer
 
 |Param|value|Type|
 |---|---|---|
 |token|eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg4MDU0NzYzLCJleHAiOjE2ODgxNDExNjN9.BiRg5t9rF-WlAv8QzhYZhomMGSnbws9_Qxe0KaWL7Ds|string|
 
-
-
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 _________________________________________________
 Powered By: [postman-to-markdown](https://github.com/bautistaj/postman-to-markdown/)
-
