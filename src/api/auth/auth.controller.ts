@@ -9,6 +9,13 @@ export interface UserLoginResponse {
   access_token: string;
 }
 
+export interface AuthenticatedUser extends Express.User {
+  id: number;
+  name: string;
+  email: string;
+  pseudonym: string | null;
+}
+
 export const attemptLogin = async ({
   email,
   password,
