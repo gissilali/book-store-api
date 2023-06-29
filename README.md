@@ -1,8 +1,11 @@
 # Book Store REST API
 
-## How to setup
+## How to set up
+```shell
+git clone git@github.com:gissilali/book-store-api.git
 ```
-npm install
+```shell
+cd book-store-api && npm install
 ```
 
 ## Lint
